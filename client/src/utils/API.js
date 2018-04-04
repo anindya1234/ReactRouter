@@ -34,7 +34,7 @@ export default {
   deleteArticles: function(id) {
     return axios.delete("/api/articles/" + id);
   },
-  
+  //add article to DB - pass object as parameter containg data needed for DB
   saveArticles: function(articleData) {
     return axios.post("/api/articles", articleData);
   }

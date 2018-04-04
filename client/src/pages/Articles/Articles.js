@@ -38,14 +38,14 @@ componentDidMount() {
   };
 
 
-  saveArticles = id => {
-    var articlesData= {
-      title: "random",
-      url: "random",
-      date: "",
-    };
+  saveArticles = article => {
+    //pass the object containg all  info related to article to create article in DB /show up in front end
 
-    API.saveArticles(articlesData)
+    API.saveArticles({
+      title: article.title,
+      url: article.url,
+      date: article.date,
+    })
       .then(res => this.loadArticles())
       .catch(err => console.log(err));
   };
@@ -87,9 +87,9 @@ componentDidMount() {
                
 
 
-
+//change state of articles to response from api
         this.setState({articles: responses, topic:"",start:"",end:""}),
-        console.log(this.state.articles)
+        console.log(this.state.articles, this.state.topic)
       })
         
         .catch(err => console.log(err));
@@ -137,15 +137,16 @@ componentDidMount() {
             </Jumbotron>
             {this.state.articles.length ? (
               <List>
-                {this.state.articles.map(article => (
-                  <ListItem key={article._id}>
+                {this.state.articles.map((article) => (
+                  <ListItem key={article.url}>
                       <strong>
                         <h3>{article.title} </h3>
                         <a href={article.url} target='_blank'>
                           Link: {article.url}
                         </a>
                       </strong>
-                    <SaveBtn onClick={() => this.saveArticles(article._id)} />
+                    <SaveBtn onClick={() => this.saveArticles(article)} />
+
                   </ListItem>
                 ))}
               </List>
